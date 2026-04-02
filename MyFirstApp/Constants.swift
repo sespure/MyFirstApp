@@ -74,7 +74,3 @@ extension Text {
             .clipShape(.rect(cornerRadius: 10))
     }
 }
-
-    
-
-
