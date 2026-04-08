@@ -69,7 +69,7 @@ struct TitleDetailView: View {
                             modelContext.insert(saveTitle)
                             try? modelContext.save()
                         } label: {
-                            Text(Constants.downloadString)
+                            Text(Constants.favoriteString)
                                 .ghostButton(width: 120)
                         }
                         

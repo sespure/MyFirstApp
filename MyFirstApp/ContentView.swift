@@ -6,22 +6,47 @@
 //
 
 import SwiftUI
-// test
+import Network
+
 struct ContentView: View {
+    @State private var networkMonitor = NWPathMonitor()
+    @State private var showAlert = false
+    @State private var hasStartedMonitoring = false
+
     var body: some View {
-        TabView{
-            Tab(Constants.homeString,systemImage: Constants.homeIconStrint) {
+        TabView {
+            Tab(Constants.homeString, systemImage: Constants.homeIconStrint) {
                 HomeView()
             }
-            Tab(Constants.upComigString,systemImage: Constants.upComigIconStrint) {
+            Tab(Constants.upComigString, systemImage: Constants.upComigIconStrint) {
                 UpcomingView()
             }
-            Tab(Constants.downloadString,systemImage: Constants.downloadIconString) {
-                DownloadView()
+            Tab(Constants.favoriteString, systemImage: Constants.favoriteIconString) {
+                FavoriteView()
             }
             Tab(Constants.searchString, systemImage: Constants.searchIconStrint, role: .search) {
                 SearchView()
             }
+        }
+        .onAppear {
+            guard !hasStartedMonitoring else { return }
+            hasStartedMonitoring = true
+
+            networkMonitor.pathUpdateHandler = { path in
+                let isDisconnected = path.status != .satisfied
+                DispatchQueue.main.async {
+                    showAlert = isDisconnected
+                }
+            }
+            networkMonitor.start(queue: DispatchQueue.global(qos: .background))
+        }
+        .onDisappear {
+            networkMonitor.cancel()
+        }
+        .alert("Network Error", isPresented: $showAlert) {
+            Button("OK", role: .cancel) { }
+        } message: {
+            Text("Please check your internet connection")
         }
     }
 }

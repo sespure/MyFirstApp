@@ -24,7 +24,7 @@ struct VerticalListView: View {
                             .resizable()
                             .scaledToFit()
                             .clipShape(.rect(cornerRadius: 10))
-                            .padding(5)
+                            .padding(10)
                         
                         Text((title.name ?? title.title) ?? "")
                             .font(.system(size: 16))

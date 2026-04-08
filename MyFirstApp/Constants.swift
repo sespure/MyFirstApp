@@ -12,7 +12,7 @@ struct Constants {
     static let homeString = "Home"
     static let upComigString = "Upcoming"
     static let searchString = "Search"
-    static let downloadString = "Download"
+    static let favoriteString = "Favorite"
     static let playString = "Play"
     static let trendingMovieString = "Trending Movie"
     static let trendingTVSString = "Trending Tv"
@@ -26,7 +26,7 @@ struct Constants {
     static let homeIconStrint = "house.fill"
     static let upComigIconStrint = "play.circle"
     static let searchIconStrint = "magnifyingglass"
-    static let downloadIconString = "arrow.down.circle.fill"
+    static let favoriteIconString = "star.circle.fill"
     static let tvIconString = "tv.fill"
     static let movieIconString = "movieclapper.fill"
     
