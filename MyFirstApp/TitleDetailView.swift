@@ -10,6 +10,8 @@ import SwiftData
 
 struct TitleDetailView: View {
     let title: Title
+    @State private var isSaved = false
+
     var titleName : String {
         return (title.name ?? title.title) ?? ""
     }
@@ -49,34 +51,37 @@ struct TitleDetailView: View {
                         .padding(5)
                     
                     HStack {
-                        
                         Spacer()
-                        
+
                         Button(action: {
                             let movieName = (title.name ?? title.title) ?? ""
                             if let url = getMovieSearchURL(movieTitle: movieName) {
                                 openURL(url)
                             }
-                            
                         }) {
                             Text("Watch")
-                                .ghostButton(width: 170)
-                            }
-                        
-                        Button {
-                            let saveTitle = title
-                            saveTitle.title = titleName
-                            modelContext.insert(saveTitle)
-                            try? modelContext.save()
-                        } label: {
-                            Text(Constants.favoriteString)
-                                .ghostButton(width: 120)
+                                .ghostButton(width: 300)
                         }
-                        
+
                         Spacer()
-                        
                     }
                 }
+            }
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing)  {
+                    Button {
+                        if isSaved == false {
+                            saveToFavorites()
+                        } else {
+                            removeFromFavorites()
+                        }
+                    } label: {
+                        Image(systemName: isSaved ? "bookmark.fill" : "bookmark")
+                    }
+                }
+            }
+            .task {
+                isSaved = isAlreadySaved()
             }
         }
     }
@@ -92,8 +97,56 @@ struct TitleDetailView: View {
         
         return URL(string: baseURL + encodedQuery)
     }
+
+    private func saveToFavorites() {
+        guard !isAlreadySaved() else {
+            isSaved = true
+            return
+        }
+
+        let savedTitle = Title(
+            id: title.id,
+            title: titleName,
+            name: title.name ?? title.title,
+            overview: title.overview,
+            posterPath: title.posterPath
+        )
+
+        modelContext.insert(savedTitle)
+        try? modelContext.save()
+        isSaved = true
+    }
+
+    private func removeFromFavorites() {
+        guard let savedTitle = fetchSavedTitle() else {
+            isSaved = false
+            return
+        }
+
+        modelContext.delete(savedTitle)
+        try? modelContext.save()
+        isSaved = false
+    }
+
+    private func isAlreadySaved() -> Bool {
+        fetchSavedTitle() != nil
+    }
+
+    private func fetchSavedTitle() -> Title? {
+        guard let titleID = title.id else {
+            return nil
+        }
+
+        let descriptor = FetchDescriptor<Title>(
+            predicate: #Predicate { savedTitle in
+                savedTitle.id == titleID
+            }
+        )
+
+        return try? modelContext.fetch(descriptor).first
+    }
 }
 
 #Preview {
-    TitleDetailView(title: Title.previewTitles[0])
+    TitleDetailView(title: Title.previewTitles[1])
 }
