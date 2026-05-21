@@ -1,0 +1,16 @@
+//
+//  APIConfig.swift
+//  MyApp
+//
+//  Created by Developer on 2023-01-01.
+//
+
+import Foundation
+
+struct APIConfig {
+    static let baseURL = "https://api.myapp.com"
+    static let apiKey = "ABC123XYZ"
+}
+
+// Local API config (contains secrets)
+APIConfig.json

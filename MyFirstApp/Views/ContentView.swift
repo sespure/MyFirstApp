@@ -15,16 +15,16 @@ struct ContentView: View {
 
     var body: some View {
         TabView {
-            Tab(Constants.homeString, systemImage: Constants.homeIconStrint) {
+            Tab(Constants.homeString, systemImage: Constants.homeIconString) {
                 HomeView()
             }
-            Tab(Constants.upComigString, systemImage: Constants.upComigIconStrint) {
+            Tab(Constants.upcomingString, systemImage: Constants.upcomingIconString) {
                 UpcomingView()
             }
-            Tab(Constants.favoriteString, systemImage: Constants.favoriteIconString) {
-                FavoriteView()
+            Tab(Constants.bookmarkString, systemImage: Constants.bookmarkIconString) {
+                BookmarksView()
             }
-            Tab(Constants.searchString, systemImage: Constants.searchIconStrint, role: .search) {
+            Tab(Constants.searchString, systemImage: Constants.searchIconString, role: .search) {
                 SearchView()
             }
         }

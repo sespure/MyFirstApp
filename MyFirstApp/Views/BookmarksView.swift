@@ -8,14 +8,14 @@
 import SwiftUI
 import SwiftData
 
-struct FavoriteView: View {
+struct BookmarksView: View {
     @Query(sort: \Title.title) var savedTitles: [Title]
     
     
     var body: some View {
         NavigationStack {
             if savedTitles.isEmpty {
-                Text("No favorites yet")
+                Text("No bookmarks yet")
                     .padding()
                     .font(.title3)
                     .bold()
@@ -27,5 +27,5 @@ struct FavoriteView: View {
 }
 
 #Preview {
-    FavoriteView()
+    BookmarksView()
 }

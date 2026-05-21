@@ -1,0 +1,46 @@
+# Xcode
+DerivedData/
+build/
+*.xcworkspace/xcuserdata/
+*.xcodeproj/project.xcworkspace/xcuserdata/
+*.xcuserstate
+*.xcscmblueprint
+
+# Swift Package Manager
+.swiftpm/
+Packages/
+Package.resolved
+
+# CocoaPods
+Pods/
+
+# Carthage
+Carthage/Build/
+
+# Fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots
+fastlane/test_output
+
+# Archives
+*.xcarchive
+
+# User-specific
+*.perspectivev3
+xcuserdata/
+
+# Temporary files
+*.swp
+*.lock
+.DS_Store
+
+# Secrets
+Config/Secrets.xcconfig
+
+# Firebase / GoogleService (if used)
+GoogleService-Info.plist
+
+# Env files
+.env
+.env.*

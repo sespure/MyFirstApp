@@ -27,7 +27,7 @@ class Title: Decodable, Identifiable, Hashable {
         self.posterPath = posterPath
     }
     
-    enum Codingkeys: CodingKey {
+    enum CodingKeys: CodingKey {
         case id
         case title
         case name
@@ -36,12 +36,12 @@ class Title: Decodable, Identifiable, Hashable {
     }
     
     required init(from decoder: any Decoder) throws {
-        let conteiner = try decoder.container(keyedBy: Codingkeys.self)
-        id = try conteiner.decodeIfPresent(Int.self, forKey: .id)
-        title = try conteiner.decodeIfPresent(String.self, forKey: .title)
-        name = try conteiner.decodeIfPresent(String.self, forKey: .name)
-        overview = try conteiner.decodeIfPresent(String.self, forKey: .overview)
-        posterPath = try conteiner.decodeIfPresent(String.self, forKey: .posterPath)
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decodeIfPresent(Int.self, forKey: .id)
+        title = try container.decodeIfPresent(String.self, forKey: .title)
+        name = try container.decodeIfPresent(String.self, forKey: .name)
+        overview = try container.decodeIfPresent(String.self, forKey: .overview)
+        posterPath = try container.decodeIfPresent(String.self, forKey: .posterPath)
         
     }
     
