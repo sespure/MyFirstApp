@@ -19,17 +19,27 @@ struct VerticalListView: View {
                 TitleDetailView(title: title)
             } label: {
                 AsyncImage(url: URL(string: title.posterPath ?? "")) { image in
-                    HStack {
+                    HStack(alignment: .top, spacing: 12) {
                         image
                             .resizable()
                             .scaledToFit()
+                            .frame(width: 130, height: 170)
                             .clipShape(.rect(cornerRadius: 10))
-                            .padding(10)
-                        
-                        Text((title.name ?? title.title) ?? "")
-                            .font(.system(size: 16))
-                            .bold()
+
+                        VStack(alignment: .leading, spacing: 8) {
+                            Text((title.name ?? title.title) ?? "")
+                                .font(.system(size: 16))
+                                .bold()
+                                .multilineTextAlignment(.leading)
+
+                            
+                            Text(title.overview ?? "")
+                                .font(.system(size: 14))
+                                .multilineTextAlignment(.leading)
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
                     }
+                    .padding(.vertical, 8)
                 } placeholder: {
                     ProgressView()
                 }

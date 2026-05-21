@@ -10,9 +10,9 @@ import SwiftUI
 
 struct Constants {
     static let homeString = "Home"
-    static let upComigString = "Upcoming"
+    static let upcomingString = "Upcoming"
     static let searchString = "Search"
-    static let favoriteString = "Favorite"
+    static let bookmarkString = "Bookmarks"
     static let playString = "Play"
     static let trendingMovieString = "Trending Movie"
     static let trendingTVSString = "Trending Tv"
@@ -23,10 +23,10 @@ struct Constants {
     static let moviePlaceholderString = "Search for a movie"
     static let tvPlaceholderString = "Search for a tv show"
     
-    static let homeIconStrint = "house.fill"
-    static let upComigIconStrint = "play.circle"
-    static let searchIconStrint = "magnifyingglass"
-    static let favoriteIconString = "star.circle.fill"
+    static let homeIconString = "house.fill"
+    static let upcomingIconString = "play.fill"
+    static let searchIconString = "magnifyingglass"
+    static let bookmarkIconString = "bookmark.fill"
     static let tvIconString = "tv.fill"
     static let movieIconString = "movieclapper.fill"
     
@@ -46,8 +46,8 @@ struct Constants {
     }
 }
 
-extension Text {
-    func ghostButton(
+extension View {
+    func buttonLabel(
         width: CGFloat = 100,
         height: CGFloat = 50,
         font: Font = .body
@@ -57,16 +57,11 @@ extension Text {
             .frame(width: width, height: height)
             .foregroundStyle(.buttonText)
             .bold()
-            .background{
-                RoundedRectangle(cornerRadius: 26, style: .continuous)
-                    .backgroundExtensionEffect()
-                    
-            }
     }
 }
 
 extension Text {
-    func errorMassage() -> some View {
+    func errorMessage() -> some View {
         self
             .foregroundStyle(.red)
             .padding()

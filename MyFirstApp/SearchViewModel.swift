@@ -9,13 +9,13 @@ import Foundation
 
 @Observable
 class SearchViewModel {
-    private(set) var errorMassage: String?
+    private(set) var errorMessage: String?
     private(set) var searchTitles: [Title] = []
     private var dataFetcher = DataFetcher()
     
     func getSearchTitles(by media: String, for title: String) async {
         do {
-            errorMassage = nil
+            errorMessage = nil
             if title.isEmpty {
                 searchTitles = try await dataFetcher.fetchTitles(for: media, by: "trending")
             } else {
@@ -23,7 +23,7 @@ class SearchViewModel {
             }
         } catch {
             print(error)
-            errorMassage = error.localizedDescription
+            errorMessage = error.localizedDescription
         }
     }
 }

@@ -45,10 +45,10 @@ struct TitleDetailView: View {
                     Text((title.name ?? title.title) ?? "")
                         .bold()
                         .font(.title2)
-                        .padding(5)
+                        .padding(8)
                     
                     Text(title.overview ?? "")
-                        .padding(5)
+                        .padding(8)
                     
                     HStack {
                         Spacer()
@@ -59,9 +59,10 @@ struct TitleDetailView: View {
                                 openURL(url)
                             }
                         }) {
-                            Text("Watch")
-                                .ghostButton(width: 300)
+                            Label("Watch", systemImage: "play.fill")
+                                .buttonLabel(width: 300)
                         }
+                        .buttonStyle(.glassProminent)
 
                         Spacer()
                     }
@@ -71,9 +72,9 @@ struct TitleDetailView: View {
                 ToolbarItem(placement: .topBarTrailing)  {
                     Button {
                         if isSaved == false {
-                            saveToFavorites()
+                            saveToBookmarks()
                         } else {
-                            removeFromFavorites()
+                            removeFromBookmarks()
                         }
                     } label: {
                         Image(systemName: isSaved ? "bookmark.fill" : "bookmark")
@@ -89,7 +90,7 @@ struct TitleDetailView: View {
     private func getMovieSearchURL(movieTitle: String) -> URL? {
         guard !movieTitle.isEmpty else { return nil }
         
-        let baseURL = "https://uakino.best/index.php?do=search&subaction=search&story="
+        let baseURL = "https://uaserials.com/index.php?do=search&subaction=search&story="
         
         guard let encodedQuery = movieTitle.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
             return nil
@@ -98,7 +99,7 @@ struct TitleDetailView: View {
         return URL(string: baseURL + encodedQuery)
     }
 
-    private func saveToFavorites() {
+    private func saveToBookmarks() {
         guard !isAlreadySaved() else {
             isSaved = true
             return
@@ -117,7 +118,7 @@ struct TitleDetailView: View {
         isSaved = true
     }
 
-    private func removeFromFavorites() {
+    private func removeFromBookmarks() {
         guard let savedTitle = fetchSavedTitle() else {
             isSaved = false
             return

@@ -10,9 +10,9 @@ import SwiftData
 
 struct HomeView: View {
 
-    let viewModel = ViewModel()
+    @State private var viewModel = ViewModel()
     @State private var titleDetailPath = NavigationPath()
-    @Environment(\.modelContext) var modelcontext
+    @Environment(\.modelContext) var modelContext
         
     var body: some View {
         NavigationStack(path: $titleDetailPath) {
@@ -47,8 +47,9 @@ struct HomeView: View {
                                     titleDetailPath.append(viewModel.heroTitle)
                                 } label: {
                                     Text("Details")
-                                        .ghostButton(width: 350, height: 50, font: .title3)
+                                        .buttonLabel(width: 350, height: 50, font: .title3)
                                 }
+                                .buttonStyle(.glass(.regular.tint(.blue)))
                             }
                             
                             HorizontalListView(header: Constants.trendingMovieString, titles: viewModel.trendingMovies) {title in
@@ -67,7 +68,7 @@ struct HomeView: View {
                     
                     case .failed(let error):
                         Text(error.localizedDescription)
-                            .errorMassage()
+                            .errorMessage()
                             .frame(width: geo.size.width, height: geo.size.height)
                         
                     }

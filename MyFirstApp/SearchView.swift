@@ -10,13 +10,21 @@ import SwiftUI
 struct SearchView: View {
     @State private var searchByMovies = true
     @State private var searchText = ""
-    private var searchViewModel = SearchViewModel()
+    @State private var searchViewModel = SearchViewModel()
     @State private var navigationPath = NavigationPath()
+
+    private var selectedMedia: String {
+        searchByMovies ? "movie" : "tv"
+    }
+
+    private var searchTaskID: String {
+        "\(selectedMedia)-\(searchText)"
+    }
     
     var body: some View {
         NavigationStack(path: $navigationPath) {
             ScrollView {
-                if let error = searchViewModel.errorMassage {
+                if let error = searchViewModel.errorMessage {
                     Text(error)
                         .foregroundStyle(.red)
                         .padding()
@@ -49,11 +57,6 @@ struct SearchView: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
                         searchByMovies.toggle()
-                        
-                        Task {
-                            await searchViewModel.getSearchTitles(by: searchByMovies ? "movie" : "tv", for: searchText)
-                        }
-                        
                     } label: {
                         Image(systemName: searchByMovies ?
                               Constants.movieIconString : Constants.tvIconString)
@@ -61,20 +64,14 @@ struct SearchView: View {
                 }
             }
             .searchable(text: $searchText, prompt: searchByMovies ? Constants.moviePlaceholderString: Constants.tvPlaceholderString)
-            .task {
-                await searchViewModel.getSearchTitles(by: searchByMovies ? "movie" : "tv", for: searchText)
-            }
-            .task(id: searchText) {
+            .task(id: searchTaskID) {
                 try? await Task.sleep(for: .milliseconds(500))
                 
                 if Task.isCancelled {
                     return
                 }
                 
-                await searchViewModel.getSearchTitles(by: searchByMovies ? "movie" : "tv", for: searchText)
-            }
-            .task(id: searchByMovies) {
-                await searchViewModel.getSearchTitles(by: searchByMovies ? "movie" : "tv", for: searchText)
+                await searchViewModel.getSearchTitles(by: selectedMedia, for: searchText)
             }
             .navigationDestination(for: Title.self) { title in
                 TitleDetailView(title: title)
