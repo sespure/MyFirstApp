@@ -44,3 +44,7 @@ GoogleService-Info.plist
 # Env files
 .env
 .env.*
+
+# Secrets
+APIConfig.json
+Config/Secrets.xcconfig
