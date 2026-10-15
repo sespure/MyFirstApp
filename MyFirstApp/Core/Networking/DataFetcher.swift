@@ -12,10 +12,6 @@ struct DataFetcher {
     let tmdbBaseURL = APIConfig.shared?.tmdbBaseURL
     let tmdbAPIKey = APIConfig.shared?.tmdbAPIKey
     
-    //https://api.themoviedb.org/3/trending/movie/day?api_key=8fbb13cdf8ccce14f5a0e1ae36b570fb
-    //https://api.themoviedb.org/3/movie/top_rated?api_key=8fbb13cdf8ccce14f5a0e1ae36b570fb
-    //https://api.themoviedb.org/3/movie/upcoming?api_key=8fbb13cdf8ccce14f5a0e1ae36b570fb
-    //https://api.themoviedb.org/3/search/movie?api_key=8fbb13cdf8ccce14f5a0e1ae36b570fb&query=PulpFiction
     
     func fetchTitles(for media: String, by type: String, with title: String? = nil) async throws -> [Title] {
       let fetchTitlesURL = try self.buildURL(media: media, type: type, searchPhrase: title)
